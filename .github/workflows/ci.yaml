@@ -21,26 +21,68 @@ jobs:
           sudo apt-get install -y --no-install-recommends \
             fonts-crosextra-carlito fonts-dejavu-mono
 
-      # Minimal TeX Live: the "basic" scheme plus only what the theme loads.
+      # Minimal TeX Live: the "basic" scheme plus only what the template loads.
+      # The list below was taken from the files a real compile reads
       - name: Install TeX Live
         uses: TeX-Live/setup-texlive-action@v4.1.1
         with:
           scheme: basic
           packages: |
+            amscls
+            amsfonts
+            amsmath
+            atbegshi
+            atveryend
+            auxhook
             beamer
-            xetex
-            fontspec
-            polyglossia
-            pgf
-            pgfplots
+            bigintcalc
+            bitset
             circuitikz
-            tcolorbox
-            listings
-            etoolbox
+            cm
             colortbl
-            tools
+            environ
+            etoolbox
+            fontspec
+            geometry
+            gettitlestring
+            graphics
+            graphics-cfg
+            graphics-def
+            hycolor
+            hyperref
+            iftex
+            infwarerr
+            intcalc
+            kvdefinekeys
+            kvoptions
+            kvsetkeys
+            l3backend
+            l3kernel
+            l3packages
+            listings
             lm
             lm-math
+            ltxcmds
+            pdfcol
+            pdfescape
+            pdftexcmds
+            pgf
+            pgfplots
+            polyglossia
+            psnfss
+            refcount
+            rerunfilecheck
+            stringenc
+            tcolorbox
+            tikzfill
+            tools
+            translator
+            trimspaces
+            uniquecounter
+            url
+            xcolor
+            xetex
+            xkeyval
 
       # Two runs: the TikZ overlays need a second pass.
       # Any compilation error fails the job (-halt-on-error); warnings do not.
