@@ -1,0 +1,370 @@
+% !TEX program = xelatex
+% =====================================================================
+%  colorbeam lecture template
+%  Compile with XeLaTeX (twice):  xelatex colorbeam-template.tex
+%  Required file in the same folder: beamerthemecolorbeam.sty
+%  Home: https://github.com/eskander/colorbeam
+% =====================================================================
+% ---------------------------------------------------------------------
+%  Copyright 2026 Eskander Bejaoui
+%
+%  This work may be distributed and/or modified under the
+%  conditions of the LaTeX Project Public License, either version 1.3c
+%  of this license or (at your option) any later version.
+%  The latest version of this license is in
+%    https://www.latex-project.org/lppl.txt
+%  and version 1.3c or later is part of all distributions of LaTeX
+%  version 2008 or later.
+%
+%  This work has the LPPL maintenance status `maintained'.
+%
+%  The Current Maintainer of this work is Eskander Bejaoui.
+%  Bug reports and contributions: https://github.com/eskander/colorbeam
+%
+%  This work consists of the files beamerthemecolorbeam.sty,
+%  colorbeam-template.tex and README.md.
+% ---------------------------------------------------------------------
+\documentclass[aspectratio=169,12pt,t]{beamer}
+
+% Fonts (optional, before \usetheme). Default: Carlito + DejaVu Sans Mono.
+% \def\colorbeamFont{Source Sans 3}
+% \def\colorbeamMono{Fira Code}
+\usetheme{colorbeam}
+
+% Main color of the deck (title slide, introduction, \resetpart).
+% Any palette color works: grape, sky, mint, leaf, sun, clay, coral, rose, plum, slate.
+% \setmaincolor{plum}
+
+% Language: polyglossia (XeLaTeX). For another language, change the main language
+% and the word used in "Part 1", e.g. \setmainlanguage{french} and \renewcommand{\partlabel}{Partie}
+\usepackage{polyglossia}
+\setmainlanguage{english}
+
+% Footer text
+\lecturefooter{My course \textbullet\ Session 1}
+
+\begin{document}
+
+% ---------------------------------------------------------------------
+% Title: \titleslide[color]{kicker}{title}{subtitle}{subtitle 2}{bottom note}
+% ---------------------------------------------------------------------
+\titleslide{COURSE \textbullet\ MY SUBJECT}{Session title}{A clear subtitle}{possibly on two lines}{First Last \textbullet\ University \textbullet\ 2026}
+
+% ---------------------------------------------------------------------
+% Outline with numbered steps (each step can have its own color)
+% ---------------------------------------------------------------------
+\begin{frame}{Session outline}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.6\textwidth}
+      \step{mint}{1}{7.3cm}Boxes and callouts\estep
+      \step{sky}{2}{7.3cm}Tables and code, with a longer line to show the automatic line wrapping\estep
+      \step{leaf}{3}{7.3cm}Diagrams, circuits and plots\estep
+      \step{plum}{4}{7.3cm}Questions and wrap-up\estep
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \begin{card}
+        {\bfseries\color{accent}Goal}\par\smallskip
+        One sentence that sums up what students will be able to do at the end.
+      \end{card}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+% The palette: ten colors, each usable as a section color
+% ---------------------------------------------------------------------
+\begin{frame}{The colorbeam palette}
+  \centering
+  \begin{tikzpicture}
+    \foreach \c/\hex/\nm/\role [count=\i from 0] in {
+        grape/2A3F73/midnight blue/{default, intro},
+        sky/2F6DA3/steel blue/{section, information},
+        mint/1D7874/teal/{section},
+        leaf/4F8A3C/green/{section, success},
+        sun/C28A12/amber/{tips, highlights},
+        clay/B8622B/terracotta/{section},
+        coral/B5443B/muted red/{warnings, questions},
+        rose/A8416B/raspberry/{section},
+        plum/6A4A9C/violet/{section},
+        slate/55657A/slate gray/{neutral, secondary}}
+      {
+        \pgfmathsetmacro{\px}{mod(\i,5)*2.85}
+        \pgfmathsetmacro{\py}{-floor(\i/5)*3.05}
+        \fill[\c,rounded corners=6pt] (\px,\py) rectangle ++(2.55,-1.45);
+        \node[anchor=north west,text=white,font=\large\bfseries] at (\px+0.15,\py-0.1) {\c};
+        \node[anchor=south west,text=white!85,font=\scriptsize] at (\px+0.15,\py-1.35) {\#\hex};
+        \node[anchor=north,text=ink,font=\footnotesize\bfseries,text width=2.5cm,align=center] at (\px+1.275,\py-1.52) {\nm};
+        \node[anchor=north,text=ink!65,font=\scriptsize,text width=2.5cm,align=center] at (\px+1.275,\py-1.88) {\role};
+      }
+  \end{tikzpicture}
+\end{frame}
+
+% ---------------------------------------------------------------------
+% Pills and colored steps
+% ---------------------------------------------------------------------
+\begin{frame}{Pills and numbered steps}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.5\textwidth}
+      {\bfseries\color{accent}Steps in any color}\par\medskip
+      \step{grape}{1}{5.5cm}Plan\estep
+      \step{sky}{2}{5.5cm}Build\estep
+      \step{leaf}{3}{5.5cm}Test\estep
+      \step{sun}{4}{5.5cm}Fix\estep
+      \step{clay}{5}{5.5cm}Document\estep
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      {\bfseries\color{accent}Pills}\par\medskip
+      \pill{grape}{grape} \pill{sky}{sky} \pill{mint}{mint} \pill{leaf}{leaf}\par\medskip
+      \pill{sun}{sun} \pill{clay}{clay} \pill{coral}{coral} \pill{rose}{rose}\par\medskip
+      \pill{plum}{plum} \pill{slate}{slate}\par\bigskip
+      \begin{card}\small\raggedright
+        An empty color, as in \texttt{\textbackslash step\{\}\{1\}\{5cm\}}, uses the color of the current section.
+      \end{card}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+% Part slide: changes the color and label of the following slides
+% \partslide{number}{color}{title}{subtitle}
+% ---------------------------------------------------------------------
+\partslide{1}{mint}{Boxes and callouts}{highlight what matters}
+
+\begin{frame}{Callout boxes}
+  \small
+  \tcbset{top=1.4mm,bottom=1.4mm}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.5\textwidth}
+      \begin{card}
+        {\bfseries\color{accent}card}\par\smallskip
+        Neutral box, section color.
+      \end{card}
+      \vspace{0.2cm}
+      \begin{tip}
+        {\bfseries tip}\par\smallskip
+        A practical remark.
+      \end{tip}
+      \vspace{0.2cm}
+      \begin{infobox}
+        {\bfseries infobox}\par\smallskip
+        Extra information or a reminder.
+      \end{infobox}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{warnbox}
+        {\bfseries warnbox}\par\smallskip
+        A warning: do not miss this!
+      \end{warnbox}
+      \vspace{0.2cm}
+      \begin{okbox}
+        {\bfseries okbox}\par\smallskip
+        A result or a good practice.
+      \end{okbox}
+      \vspace{0.2cm}
+      \begin{itemize}
+        \item Plain bullet list
+        \item Bullets follow the section color
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Any color, any box}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.33\textwidth}
+      \begin{colorcard}{clay}
+        {\bfseries\color{clay}colorcard\{clay\}}\par\smallskip\small
+        Tinted background, colored frame.
+      \end{colorcard}
+    \end{column}
+    \begin{column}{0.33\textwidth}
+      \begin{colorcard}{rose}
+        {\bfseries\color{rose}colorcard\{rose\}}\par\smallskip\small
+        Use it for a recurring theme.
+      \end{colorcard}
+    \end{column}
+    \begin{column}{0.33\textwidth}
+      \begin{colorcard}{plum}
+        {\bfseries\color{plum}colorcard\{plum\}}\par\smallskip\small
+        Or to tell two ideas apart.
+      \end{colorcard}
+    \end{column}
+  \end{columns}
+  \vspace{0.3cm}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.5\textwidth}
+      \begin{colorcard}{slate}
+        {\bfseries\color{slate}colorcard\{slate\}}\par\smallskip\small
+        Neutral side notes and references.
+      \end{colorcard}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{colorcard}{leaf}
+        {\bfseries\color{leaf}colorcard\{leaf\}}\par\smallskip\small
+        Same look as okbox, any color you like.
+      \end{colorcard}
+    \end{column}
+  \end{columns}
+  \vspace{0.35cm}
+  \begin{darkbox}
+    {\bfseries darkbox: the one thing to remember}
+  \end{darkbox}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\partslide{2}{sky}{Tables and code}{structured content}
+
+\begin{frame}{Comparison table}
+  \renewcommand{\arraystretch}{1.3}
+  \centering
+  \begin{tabular}{@{}>{\bfseries}p{4cm}p{4.2cm}p{4.2cm}@{}}
+    \rowcolor{ink}\color{white}\bfseries & \color{white}\bfseries Option A & \color{white}\bfseries Option B\\
+    \rowcolor{white} Criterion 1 & value & value\\
+    \rowcolor{accent!10} Criterion 2 & value & \textcolor{leaf}{\textbf{best value}}\\
+    \rowcolor{white} Criterion 3 & value & value\\
+    \rowcolor{accent!10} Criterion 4 & \textcolor{coral}{\textbf{worst value}} & value\\
+  \end{tabular}
+\end{frame}
+
+% Frames that contain code must be [fragile]
+\begin{frame}[fragile]{Code block}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.62\textwidth}
+      \begin{codebox}[title={example.py},listing options={style=code,language=Python}]
+def average(values):
+    # compute the mean
+    return sum(values) / len(values)
+
+print(average([12, 15, 9]))
+      \end{codebox}
+    \end{column}
+    \begin{column}{0.38\textwidth}
+      \begin{card}
+        {\bfseries\color{accent}Your turn}\par\smallskip\small
+        \step{}{1}{3.2cm}Write the code\estep
+        \step{}{2}{3.2cm}Run it\estep
+        \step{}{3}{3.2cm}Compare the result\estep
+      \end{card}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Two code blocks side by side (Arduino / C++)}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.42\textwidth}
+      \begin{ino}[title={setup},listing options={style=ino,basicstyle=\codefont{9.5}{11.6}}]
+const int LED = 2;
+
+void setup() {
+  pinMode(LED, OUTPUT);
+  Serial.begin(115200);
+}
+      \end{ino}
+    \end{column}
+    \begin{column}{0.58\textwidth}
+      \begin{ino}[title={loop},listing options={style=ino,basicstyle=\codefont{9.5}{11.6}}]
+void loop() {
+  digitalWrite(LED, HIGH);  // on
+  delay(500);
+  digitalWrite(LED, LOW);   // off
+  delay(500);
+}
+      \end{ino}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\partslide{3}{leaf}{Diagrams and plots}{TikZ, CircuiTikZ and pgfplots}
+
+\begin{frame}{Chained formulas with flowbox}
+  \centering
+  \begin{tikzpicture}
+    \node[flowbox]      (a) at (0,0)   {{\bfseries\color{accent}1. Measure}\\[6pt] $V=\dfrac{N\times V_{\mathrm{ref}}}{N_{\max}}$};
+    \node[flowbox=sky]  (b) at (4.6,0) {{\bfseries\color{sky}2. Convert}\\[6pt] $R=\dfrac{R_0\,V}{V_{\mathrm{ref}}-V}$};
+    \node[flowbox=plum] (c) at (9.2,0) {{\bfseries\color{plum}3. Result}\\[6pt] $T=f(R)$};
+    \draw[ar] (a.east) -- (b.west);
+    \draw[ar] (b.east) -- (c.west);
+  \end{tikzpicture}
+  \vspace{0.4cm}
+
+  {\small\color{ink!70}\texttt{flowbox} takes an optional color: \texttt{flowbox=plum}. Without it, it uses the section color.}
+\end{frame}
+
+\begin{frame}{Electrical schematic}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.6\textwidth}
+      \begin{circuitikz}[line width=1.3pt,every node/.style={font=\footnotesize}]
+        \draw (1.9,4.3) to[R,l_=$10\,\mathrm{k}\ohm$] (1.9,2.4);
+        \draw (1.9,2.4) to[R,l_=$10\,\mathrm{k}\ohm$] (1.9,0.5);
+        \draw[wire,coral] (1.9,4.3) -- (5.4,4.3);
+        \draw[wire,black!80] (1.9,0.5) -- (5.4,0.5);
+        \draw[wire,orange!90!black] (1.9,2.4) node[circ]{} -- (5.4,2.4);
+        \node[board,minimum width=2.7cm,minimum height=4.9cm,anchor=south west] at (5.4,0.05) {};
+        \foreach \y/\l in {4.3/3V3,2.4/GPIO 34,0.5/GND} {\fill[pinc] (5.4,\y) circle (0.1); \node[pinl] at (5.6,\y) {\l};}
+        \node[rotate=90,text=white,font=\small\bfseries] at (7.75,2.5) {BOARD};
+      \end{circuitikz}
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \begin{card}
+        Voltage divider: the middle point is wired to the analog input.
+      \end{card}
+      \vspace{0.2cm}
+      \begin{tip}\small Red: power. Black: ground. Orange: signal.\end{tip}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Plot with several colors}
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[width=11cm,height=5.8cm,xlabel={Time (s)},ylabel={Voltage (V)},
+        label style={font=\footnotesize,text=ink},tick label style={font=\scriptsize},axis line style={ink},
+        grid=both,grid style={ink!10},every axis plot/.append style={line width=2.2pt},
+        legend style={font=\scriptsize,at={(0.97,0.05)},anchor=south east,draw=ink!30}]
+      \addplot[accent,domain=0:5,samples=60]{3.3*(1-exp(-x))};
+      \addplot[coral,domain=0:5,samples=60]{3.3*(1-exp(-2*x))};
+      \addplot[leaf,domain=0:5,samples=60]{3.3*(1-exp(-0.5*x))};
+      \legend{$\tau=1$ s,$\tau=0.5$ s,$\tau=2$ s}
+    \end{axis}
+  \end{tikzpicture}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\partslide{4}{plum}{Questions and wrap-up}{engage the class}
+
+\begin{frame}{Question}
+  \questionmark
+  \vspace{0.3cm}
+  \begin{card}[width=10.5cm,colframe=coral,boxrule=1.6pt,top=5mm,bottom=4mm]
+    {\fontsize{22}{28}\selectfont\bfseries A question to ask the class?}\par\bigskip
+    {\fontsize{22}{28}\selectfont\bfseries\color{coral}Why?}
+  \end{card}
+  \vspace{0.5cm}
+  {\small\color{ink!70}Discuss with your neighbor before moving on.}
+\end{frame}
+
+\begin{frame}{Numbered rows and troubleshooting rows}
+  \numrow{}{1}{Numbered row}{A title and a one-line description, framed in the section color}
+  \numrow{sun!90!black}{2}{Numbered row in another color}{Pass any palette color as first argument}
+  \vspace{0.3cm}
+  \helprow{}{Problem}{Short explanation of the cause and of the fix}
+  \helprow{coral}{Another problem}{Same row, in red for something critical}
+\end{frame}
+
+% ---------------------------------------------------------------------
+% Wrap-up: \resetpart returns to the main color, with no label
+% ---------------------------------------------------------------------
+\resetpart
+\begin{frame}{Summary}
+  \vspace{0.2cm}
+  \step{}{1}{12.2cm}First takeaway\estep
+  \step{}{2}{12.2cm}Second takeaway\estep
+  \step{}{3}{12.2cm}Third takeaway\estep
+  \vspace{0.1cm}
+  \begin{darkbox}
+    {\bfseries Going further: an idea for the next session}
+  \end{darkbox}
+\end{frame}
+
+\end{document}

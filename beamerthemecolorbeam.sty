@@ -1,0 +1,247 @@
+% =====================================================================
+%  beamerthemecolorbeam.sty
+%  colorbeam: a calm but friendly Beamer theme for university lectures
+%  and lab sessions (16:9), with a multi-color section system, callout
+%  boxes, code blocks, numbered steps and TikZ / CircuiTikZ helpers.
+%
+%  Home: https://github.com/eskander/colorbeam
+%
+%  Compile with XeLaTeX or LuaLaTeX (fontspec is required):
+%     \documentclass[aspectratio=169,12pt,t]{beamer}
+%     \usetheme{colorbeam}
+% =====================================================================
+% ---------------------------------------------------------------------
+%  Copyright 2026 Eskander Bejaoui
+%
+%  This work may be distributed and/or modified under the
+%  conditions of the LaTeX Project Public License, either version 1.3c
+%  of this license or (at your option) any later version.
+%  The latest version of this license is in
+%    https://www.latex-project.org/lppl.txt
+%  and version 1.3c or later is part of all distributions of LaTeX
+%  version 2008 or later.
+%
+%  This work has the LPPL maintenance status `maintained'.
+%
+%  The Current Maintainer of this work is Eskander Bejaoui.
+%  Bug reports and contributions: https://github.com/eskander/colorbeam
+%
+%  This work consists of the files beamerthemecolorbeam.sty,
+%  colorbeam-template.tex and README.md.
+% ---------------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerthemecolorbeam}[2026/11/10 v1.0 colorbeam Beamer theme]
+
+\RequirePackage{fontspec}
+\RequirePackage{etoolbox}
+\RequirePackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning,shapes.geometric,shadows}
+\RequirePackage[european]{circuitikz}
+\RequirePackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepgfplotslibrary{groupplots}
+\RequirePackage{colortbl,array}
+\RequirePackage{listings}
+\RequirePackage[most]{tcolorbox}
+\tcbuselibrary{listings,skins}
+
+% ---------- Fonts (override before \usetheme) ----------
+% Example: \def\colorbeamFont{Source Sans 3}  \def\colorbeamMono{Fira Code}
+\providecommand{\colorbeamFont}{Carlito}
+\providecommand{\colorbeamMono}{DejaVu Sans Mono}
+\usefonttheme{professionalfonts}
+\setmainfont{\colorbeamFont}
+\setsansfont{\colorbeamFont}
+\setmonofont{\colorbeamMono}[Scale=MatchLowercase]
+\renewcommand{\familydefault}{\sfdefault}
+
+% ---------- Palette ----------
+% Neutrals
+\definecolor{ink}{HTML}{1F2A44}     % text, dark boxes
+\definecolor{paper}{HTML}{F7F8FA}   % slide background
+\definecolor{codebg}{HTML}{18212F}  % code block background
+% Section colors (any of them can be used with \partslide / \setpart)
+\definecolor{grape}{HTML}{2A3F73}   % midnight blue : default color / introduction
+\definecolor{sky}{HTML}{2F6DA3}     % steel blue
+\definecolor{mint}{HTML}{1D7874}    % teal
+\definecolor{leaf}{HTML}{4F8A3C}    % green : success, results
+\definecolor{sun}{HTML}{C28A12}     % amber : tips
+\definecolor{clay}{HTML}{B8622B}    % terracotta
+\definecolor{coral}{HTML}{B5443B}   % muted red : warnings, questions, power wires
+\definecolor{rose}{HTML}{A8416B}    % raspberry
+\definecolor{plum}{HTML}{6A4A9C}    % violet
+\definecolor{slate}{HTML}{55657A}   % slate gray : neutral, secondary
+% Main color of the deck (title slide, intro, \resetpart). Change it with \setmaincolor{<color>}.
+\colorlet{maincolor}{grape}
+\colorlet{accent}{maincolor}        % color of the current section
+
+% ---------- Section management ----------
+\providecommand{\parttag}{}          % label shown at the top right of the title bar
+\providecommand{\partlabel}{Part}    % word used in "Part 1" (change it for other languages)
+\providecommand{\colorbeam@footer}{}
+\newcommand{\lecturefooter}[1]{\renewcommand{\colorbeam@footer}{#1}}
+% \setpart{color}{label}: sets the color and label of the following slides
+\newcommand{\setpart}[2]{\colorlet{accent}{#1}\renewcommand{\parttag}{#2}}
+% \resetpart: back to the main color, no label
+\newcommand{\resetpart}{\colorlet{accent}{maincolor}\renewcommand{\parttag}{}}
+% \setmaincolor{color}: re-brand the whole deck with one line (title slide, intro, \resetpart)
+\newcommand{\setmaincolor}[1]{\colorlet{maincolor}{#1}\colorlet{accent}{maincolor}}
+
+% ---------- General look ----------
+\setbeamertemplate{navigation symbols}{}
+\setbeamercolor{background canvas}{bg=paper}
+\setbeamercolor{normal text}{fg=ink}
+\setbeamercolor{itemize item}{fg=accent}
+\setbeamercolor{itemize subitem}{fg=accent}
+\setbeamertemplate{itemize item}[circle]
+\setbeamertemplate{itemize subitem}[circle]
+\setbeamersize{text margin left=0.9cm,text margin right=0.9cm}
+\setlength{\leftmargini}{1.2em}
+
+\setbeamertemplate{frametitle}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[accent] (current page.north west) rectangle ([yshift=-1.25cm]current page.north east);
+    \node[anchor=west,text=white,font=\Large\bfseries] at ([xshift=0.9cm,yshift=-0.63cm]current page.north west) {\insertframetitle};
+    \ifdefempty{\parttag}{}{\node[anchor=east,draw=white,text=white,rounded corners=3pt,font=\scriptsize,inner xsep=6pt,inner ysep=3pt]
+        at ([xshift=-0.9cm,yshift=-0.63cm]current page.north east) {\parttag};}
+  \end{tikzpicture}%
+  \vskip 0.55cm\raggedright
+}
+
+\setbeamertemplate{footline}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[accent] (current page.south west) rectangle ++(\paperwidth,0.06cm);
+    \node[anchor=west,font=\scriptsize,text=ink!60] at ([xshift=0.9cm,yshift=0.4cm]current page.south west) {\colorbeam@footer};
+    \node[anchor=east,font=\scriptsize,text=ink!60] at ([xshift=-0.9cm,yshift=0.4cm]current page.south east) {\insertframenumber};
+  \end{tikzpicture}%
+}
+
+% ---------- Title slide ----------
+% \titleslide[color]{kicker}{title}{subtitle}{subtitle 2}{bottom note}
+% The optional color defaults to the main color.
+\newcommand{\titleslide}[6][maincolor]{%
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[#1] (current page.south west) rectangle (current page.north east);
+    \fill[white] ([xshift=1.2cm,yshift=-6.5cm]current page.north west) rectangle ++(0.1cm,4.0cm);
+    \node[anchor=west,text=white!75,font=\small\bfseries] at ([xshift=1.7cm,yshift=-2.9cm]current page.north west) {#2};
+    \node[anchor=west,text=white,font=\fontsize{40}{44}\selectfont\bfseries] at ([xshift=1.7cm,yshift=-4.0cm]current page.north west) {#3};
+    \node[anchor=west,text=white,font=\LARGE] at ([xshift=1.7cm,yshift=-5.2cm]current page.north west) {#4};
+    \node[anchor=west,text=white!85,font=\Large] at ([xshift=1.7cm,yshift=-6.0cm]current page.north west) {#5};
+    \node[anchor=west,text=white!70,font=\normalsize] at ([xshift=1.7cm,yshift=-7.6cm]current page.north west) {#6};
+  \end{tikzpicture}
+\end{frame}}
+
+% ---------- Part (section) slide ----------
+% \partslide{number}{color}{title}{subtitle}
+% Also sets the color and label of all the following slides.
+\newcommand{\partslide}[4]{%
+\setpart{#2}{\partlabel\ #1}%
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[#2] (current page.south west) rectangle (current page.north east);
+    \node[anchor=west,text=white,font=\fontsize{80}{80}\selectfont\bfseries] at ([xshift=1.7cm]current page.west) {#1};
+    \fill[white] ([xshift=4.4cm,yshift=-1.4cm]current page.west) rectangle ++(0.08cm,2.8cm);
+    \node[anchor=west,text=white,font=\fontsize{32}{36}\selectfont\bfseries] at ([xshift=4.9cm,yshift=0.7cm]current page.west) {\partlabel\ #1};
+    \node[anchor=west,text=white,font=\Large] at ([xshift=4.9cm,yshift=-0.2cm]current page.west) {#3};
+    \node[anchor=west,text=white!80,font=\normalsize] at ([xshift=4.9cm,yshift=-0.9cm]current page.west) {#4};
+  \end{tikzpicture}
+\end{frame}}
+
+% ---------- Boxes ----------
+% card     : neutral box, in the color of the current section
+% tip      : tip (amber)          warnbox : warning (red)
+% infobox  : information (blue)   okbox   : success / result (green)
+% colorcard: any palette color, \begin{colorcard}[options]{plum} ... \end{colorcard}
+% darkbox  : dark box with white text, for key takeaways
+\tcbset{colorbeam box/.style={enhanced,arc=2mm,left=3mm,right=3mm,top=2mm,bottom=2mm}}
+\newtcolorbox{card}[1][]{colorbeam box,colback=white,colframe=accent,boxrule=1.1pt,#1}
+\newtcolorbox{tip}[1][]{colorbeam box,colback=sun!22,colframe=sun!85!black,boxrule=1.1pt,#1}
+\newtcolorbox{warnbox}[1][]{colorbeam box,colback=coral!14,colframe=coral,boxrule=1.3pt,#1}
+\newtcolorbox{infobox}[1][]{colorbeam box,colback=sky!12,colframe=sky,boxrule=1.1pt,#1}
+\newtcolorbox{okbox}[1][]{colorbeam box,colback=leaf!14,colframe=leaf,boxrule=1.1pt,#1}
+\newtcolorbox{colorcard}[2][]{colorbeam box,colback=#2!10,colframe=#2,boxrule=1.1pt,#1}
+\newtcolorbox{darkbox}[1][]{enhanced,colback=ink,colframe=ink,arc=2mm,coltext=white,
+  halign=center,top=2mm,bottom=2mm,#1}
+
+% ---------- Numbered steps, rows and pills ----------
+% \num[color]{n}            : numbered circle (default: current section color)
+% \step{color}{n}{width} ... \estep : numbered step; an empty color means the section color
+\newcommand{\num}[2][accent]{\tikz[baseline=(n.base)]\node[circle,fill=#1,text=white,font=\bfseries\small,inner sep=0pt,minimum size=0.6cm](n){#2};}
+\newcommand{\step}[3]{\noindent\ifblank{#1}{\num{#2}}{\num[#1]{#2}}\hspace{0.25cm}\begin{minipage}[c]{#3}}
+\newcommand{\estep}{\end{minipage}\par\vspace{0.28cm}}
+% \pill{color}{text}        : small colored label
+\newcommand{\pill}[2]{\tikz[baseline=(n.base)]\node[rounded corners=8pt,fill=#1,text=white,font=\scriptsize\bfseries,inner xsep=7pt,inner ysep=3pt](n){#2};}
+\newcommand{\ohm}{\ensuremath{\Omega}}
+% Internal: \colorbeam@pick{color} defines "cbcolor" (empty argument = section color)
+\newcommand{\colorbeam@pick}[1]{\ifblank{#1}{\colorlet{cbcolor}{accent}}{\colorlet{cbcolor}{#1}}}
+% \numrow{color}{n}{title}{description} : one-line framed row with a numbered circle
+\newcommand{\numrow}[4]{\begingroup\colorbeam@pick{#1}%
+  \begin{tcolorbox}[enhanced,colback=white,colframe=cbcolor,arc=3mm,boxrule=1.1pt,left=2mm,top=1mm,bottom=1mm,
+    height=1.1cm,valign=center]\num[cbcolor]{#2}\hspace{0.3cm}%
+    \begin{minipage}[c]{12.1cm}{\bfseries #3}\\[-1pt]{\scriptsize\color{ink!70}#4}\end{minipage}%
+  \end{tcolorbox}\endgroup\vspace{-1mm}}
+% \helprow{color}{problem}{solution} : two-column row, handy for troubleshooting lists
+\newcommand{\helprow}[3]{\begingroup\colorbeam@pick{#1}%
+  \begin{tcolorbox}[enhanced,colback=white,colframe=cbcolor,arc=3mm,boxrule=1.1pt,left=2mm,top=0.8mm,bottom=0.8mm,
+    height=0.98cm,valign=center]
+    \begin{minipage}[c]{4.6cm}\raggedright\bfseries\footnotesize\color{cbcolor}#2\end{minipage}\hfill%
+    \begin{minipage}[c]{7.4cm}\raggedright\scriptsize #3\end{minipage}%
+  \end{tcolorbox}\endgroup\vspace{-2mm}}
+% \questionmark : large faded "?" in the bottom-right corner (for question slides)
+\newcommand{\questionmark}{\begin{tikzpicture}[remember picture,overlay]
+    \fill[ink,opacity=0.06] ([xshift=-2cm,yshift=1.8cm]current page.south east) circle (2.2cm);
+    \node[font=\fontsize{90}{90}\selectfont\bfseries,text=ink!35] at ([xshift=-2.2cm,yshift=2cm]current page.south east) {?};
+  \end{tikzpicture}}
+
+% ---------- Code blocks ----------
+% \codefont{size}{leading}: use inside "listing options" to shrink a code block
+\newcommand{\codefont}[2]{\ttfamily\fontsize{#1}{#2}\selectfont\color{white}}
+\lstdefinelanguage{Arduino}{language=C++,
+  morekeywords=[2]{Serial,Wire,WiFi,SPI,analogRead,analogWrite,digitalRead,digitalWrite,pinMode,
+    begin,print,println,printf,delay,delayMicroseconds,millis,micros,isnan,log,readTemperature,readHumidity,DHT},
+  morekeywords=[3]{HIGH,LOW,INPUT,OUTPUT,INPUT_PULLUP,LED_BUILTIN},
+  morecomment=[l]{//}}
+\lstdefinestyle{code}{
+  basicstyle=\codefont{10}{12.4},
+  keywordstyle=[1]\color{sun},
+  keywordstyle=[2]\color{accent!60!white},
+  keywordstyle=[3]\color{leaf!55!white},
+  commentstyle=\color{white!55!ink},
+  stringstyle=\color{mint!70!white},
+  showstringspaces=false,columns=fixed,keepspaces=true,
+  % accented letters in code comments and strings (French, Spanish, ...)
+  literate={é}{{\'e}}1 {è}{{\`e}}1 {ê}{{\^e}}1 {à}{{\`a}}1 {â}{{\^a}}1 {ù}{{\`u}}1 {î}{{\^i}}1
+           {ô}{{\^o}}1 {û}{{\^u}}1 {ç}{{\c c}}1 {É}{{\'E}}1 {È}{{\`E}}1 {À}{{\`A}}1 {ñ}{{\~n}}1}
+\lstdefinestyle{ino}{style=code,language=Arduino,directivestyle=\color{coral!85!white}}
+\tcbset{codebox style/.style={listing only,colback=codebg,colframe=accent,
+  coltitle=white,fonttitle=\ttfamily\small\bfseries,boxrule=1.2pt,arc=3mm,
+  left=3mm,right=2mm,top=2mm,bottom=2mm,enhanced,attach boxed title to top left={yshift=-2mm,xshift=4mm},
+  boxed title style={colback=accent,arc=2mm,boxrule=0pt,top=0.8mm,bottom=0.8mm}}}
+% codebox: any language, e.g. \begin{codebox}[title={file.py},listing options={style=code,language=Python}]
+% ino    : shortcut for Arduino / C++
+% (frames containing code must be declared [fragile])
+\newtcblisting{codebox}[1][]{codebox style,listing options={style=code},#1}
+\newtcblisting{ino}[1][]{codebox style,listing options={style=ino},#1}
+
+% ---------- TikZ / CircuiTikZ helpers ----------
+\tikzset{
+  ar/.style={-{Stealth[length=3mm]},line width=2pt,color=ink!55},        % flow arrow
+  wire/.style={line width=2.2pt,line cap=round},                          % wire
+  board/.style={fill=ink,rounded corners=5pt},                            % electronic board (ESP32, Arduino...)
+  pinc/.style={fill=white,draw=none},                                     % pin
+  pinl/.style={anchor=west,text=white,font=\footnotesize\bfseries},       % pin label
+  % flowbox=<color>: centered box for formulas or process steps (default: section color)
+  flowbox/.style={rounded corners=8pt,fill=white,draw=#1,line width=1.5pt,text width=3.55cm,
+                  align=center,minimum height=2.5cm,font=\small,inner sep=5pt},
+  flowbox/.default=accent,
+  % tile=<color>: left-aligned box for an item or a piece of equipment, anchored at its north west corner
+  tile/.style={rounded corners=7pt,fill=white,draw=#1,line width=1.5pt,text width=3.95cm,
+               minimum height=1.9cm,align=left,inner sep=7pt,font=\small,anchor=north west},
+  tile/.default=accent,
+  % stagebox=<color>: tall box for a stage of a pipeline, anchored at its north edge
+  stagebox/.style={rounded corners=8pt,minimum width=2.45cm,minimum height=3.1cm,draw=#1,fill=white,
+                   line width=1.5pt,align=center,text width=2.2cm,font=\footnotesize,inner sep=3pt,anchor=north},
+  stagebox/.default=accent
+}
+\endinput
