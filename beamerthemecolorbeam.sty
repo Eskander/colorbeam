@@ -2,13 +2,15 @@
 %  beamerthemecolorbeam.sty
 %  colorbeam: a calm but friendly Beamer theme for university lectures
 %  and lab sessions (16:9), with a multi-color section system, callout
-%  boxes, code blocks, numbered steps and TikZ / CircuiTikZ helpers.
+%  boxes, code blocks, numbered steps and TikZ helpers. Subject-specific
+%  extras (programming, electronics) are optional libraries.
 %
 %  Home: https://github.com/eskander/colorbeam
 %
 %  Compile with XeLaTeX or LuaLaTeX (fontspec is required):
 %     \documentclass[aspectratio=169,12pt,t]{beamer}
 %     \usetheme{colorbeam}
+%     \usecolorbeamlibrary{programming,electronics}   % optional
 % =====================================================================
 % ---------------------------------------------------------------------
 %  Copyright 2026 Eskander Bejaoui
@@ -27,16 +29,16 @@
 %  Bug reports and contributions: https://github.com/eskander/colorbeam
 %
 %  This work consists of the files beamerthemecolorbeam.sty,
-%  colorbeam-template.tex and README.md.
+%  colorbeamlib-programming.sty, colorbeamlib-electronics.sty,
+%  colorbeam-template.tex, README.md and LICENSE.
 % ---------------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{beamerthemecolorbeam}[2026/11/10 v1.0 colorbeam Beamer theme]
+\ProvidesPackage{beamerthemecolorbeam}[2026/11/10 v1.1 colorbeam Beamer theme]
 
 \RequirePackage{fontspec}
 \RequirePackage{etoolbox}
 \RequirePackage{tikz}
 \usetikzlibrary{arrows.meta,calc,positioning,shapes.geometric,shadows}
-\RequirePackage[european]{circuitikz}
 \RequirePackage{pgfplots}
 \pgfplotsset{compat=1.17}
 \usepgfplotslibrary{groupplots}
@@ -54,6 +56,12 @@
 \setsansfont{\colorbeamFont}
 \setmonofont{\colorbeamMono}[Scale=MatchLowercase]
 \renewcommand{\familydefault}{\sfdefault}
+
+% ---------- Optional libraries ----------
+% \usecolorbeamlibrary{programming,electronics} loads colorbeamlib-<name>.sty for each name.
+% Call it after \usetheme{colorbeam}. The libraries can also be loaded with \usepackage.
+\newcommand{\colorbeam@loadlib}[1]{\RequirePackage{colorbeamlib-#1}}
+\newcommand{\usecolorbeamlibrary}[1]{\forcsvlist{\colorbeam@loadlib}{#1}}
 
 % ---------- Palette ----------
 % Neutrals
@@ -172,7 +180,6 @@
 \newcommand{\estep}{\end{minipage}\par\vspace{0.28cm}}
 % \pill{color}{text}        : small colored label
 \newcommand{\pill}[2]{\tikz[baseline=(n.base)]\node[rounded corners=8pt,fill=#1,text=white,font=\scriptsize\bfseries,inner xsep=7pt,inner ysep=3pt](n){#2};}
-\newcommand{\ohm}{\ensuremath{\Omega}}
 % Internal: \colorbeam@pick{color} defines "cbcolor" (empty argument = section color)
 \newcommand{\colorbeam@pick}[1]{\ifblank{#1}{\colorlet{cbcolor}{accent}}{\colorlet{cbcolor}{#1}}}
 % \numrow{color}{n}{title}{description} : one-line framed row with a numbered circle
@@ -197,11 +204,6 @@
 % ---------- Code blocks ----------
 % \codefont{size}{leading}: use inside "listing options" to shrink a code block
 \newcommand{\codefont}[2]{\ttfamily\fontsize{#1}{#2}\selectfont\color{white}}
-\lstdefinelanguage{Arduino}{language=C++,
-  morekeywords=[2]{Serial,Wire,WiFi,SPI,analogRead,analogWrite,digitalRead,digitalWrite,pinMode,
-    begin,print,println,printf,delay,delayMicroseconds,millis,micros,isnan,log,readTemperature,readHumidity,DHT},
-  morekeywords=[3]{HIGH,LOW,INPUT,OUTPUT,INPUT_PULLUP,LED_BUILTIN},
-  morecomment=[l]{//}}
 \lstdefinestyle{code}{
   basicstyle=\codefont{10}{12.4},
   keywordstyle=[1]\color{sun},
@@ -213,24 +215,20 @@
   % accented letters in code comments and strings (French, Spanish, ...)
   literate={é}{{\'e}}1 {è}{{\`e}}1 {ê}{{\^e}}1 {à}{{\`a}}1 {â}{{\^a}}1 {ù}{{\`u}}1 {î}{{\^i}}1
            {ô}{{\^o}}1 {û}{{\^u}}1 {ç}{{\c c}}1 {É}{{\'E}}1 {È}{{\`E}}1 {À}{{\`A}}1 {ñ}{{\~n}}1}
-\lstdefinestyle{ino}{style=code,language=Arduino,directivestyle=\color{coral!85!white}}
 \tcbset{codebox style/.style={listing only,colback=codebg,colframe=accent,
   coltitle=white,fonttitle=\ttfamily\small\bfseries,boxrule=1.2pt,arc=3mm,
   left=3mm,right=2mm,top=2mm,bottom=2mm,enhanced,attach boxed title to top left={yshift=-2mm,xshift=4mm},
   boxed title style={colback=accent,arc=2mm,boxrule=0pt,top=0.8mm,bottom=0.8mm}}}
-% codebox: any language, e.g. \begin{codebox}[title={file.py},listing options={style=code,language=Python}]
-% ino    : shortcut for Arduino / C++
+% codebox: any language known to listings, e.g.
+%   \begin{codebox}[title={file.py},listing options={style=code,language=Python}]
+% The programming library adds tuned styles and shortcuts (pycode, jscode, ccode, cppcode, ino).
 % (frames containing code must be declared [fragile])
 \newtcblisting{codebox}[1][]{codebox style,listing options={style=code},#1}
-\newtcblisting{ino}[1][]{codebox style,listing options={style=ino},#1}
 
-% ---------- TikZ / CircuiTikZ helpers ----------
+% ---------- TikZ helpers ----------
+% (electronics styles such as wire, board, pinc and pinl live in the electronics library)
 \tikzset{
   ar/.style={-{Stealth[length=3mm]},line width=2pt,color=ink!55},        % flow arrow
-  wire/.style={line width=2.2pt,line cap=round},                          % wire
-  board/.style={fill=ink,rounded corners=5pt},                            % electronic board (ESP32, Arduino...)
-  pinc/.style={fill=white,draw=none},                                     % pin
-  pinl/.style={anchor=west,text=white,font=\footnotesize\bfseries},       % pin label
   % flowbox=<color>: centered box for formulas or process steps (default: section color)
   flowbox/.style={rounded corners=8pt,fill=white,draw=#1,line width=1.5pt,text width=3.55cm,
                   align=center,minimum height=2.5cm,font=\small,inner sep=5pt},

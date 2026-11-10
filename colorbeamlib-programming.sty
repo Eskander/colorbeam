@@ -1,0 +1,79 @@
+% ---------------------------------------------------------------------
+%  Copyright 2026 Eskander Bejaoui
+%
+%  This work may be distributed and/or modified under the
+%  conditions of the LaTeX Project Public License, either version 1.3c
+%  of this license or (at your option) any later version.
+%  The latest version of this license is in
+%    https://www.latex-project.org/lppl.txt
+%  and version 1.3c or later is part of all distributions of LaTeX
+%  version 2008 or later.
+%
+%  This work has the LPPL maintenance status `maintained'.
+%
+%  The Current Maintainer of this work is Eskander Bejaoui.
+%  Bug reports and contributions: https://github.com/eskander/colorbeam
+%
+%  This work consists of the files beamerthemecolorbeam.sty,
+%  colorbeamlib-programming.sty, colorbeamlib-electronics.sty,
+%  colorbeam-template.tex, README.md and LICENSE.
+% ---------------------------------------------------------------------
+%
+%  colorbeam library: programming
+%  Highlighting styles and code-block shortcuts for Arduino, Python,
+%  C, C++ and JavaScript. Load it with
+%
+%     \usecolorbeamlibrary{programming}
+%
+%  Environments (all take the codebox options, e.g. [title={main.c}]):
+%     ino      Arduino / C++       pycode   Python
+%     ccode    C                   cppcode  C++
+%     jscode   JavaScript
+%  Listing styles for use with codebox: ino, py, c, cpp, js.
+%  Frames containing code must be declared [fragile].
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{colorbeamlib-programming}[2026/11/10 v1.1 colorbeam programming library]
+\@ifpackageloaded{beamerthemecolorbeam}{}{%
+  \PackageError{colorbeamlib-programming}{The colorbeam theme is not loaded}{%
+    Put \string\usetheme{colorbeam} before loading this library.}}
+
+% ---------- Arduino ----------
+\lstdefinelanguage{Arduino}{language=C++,
+  morekeywords=[2]{Serial,Wire,WiFi,SPI,analogRead,analogWrite,digitalRead,digitalWrite,pinMode,
+    begin,print,println,printf,delay,delayMicroseconds,millis,micros,isnan,log,readTemperature,readHumidity,DHT},
+  morekeywords=[3]{HIGH,LOW,INPUT,OUTPUT,INPUT_PULLUP,LED_BUILTIN},
+  morecomment=[l]{//}}
+
+% ---------- JavaScript (not shipped with listings) ----------
+\lstdefinelanguage{JavaScript}{
+  morekeywords={async,await,break,case,catch,class,const,continue,debugger,default,delete,do,
+    else,export,extends,finally,for,function,if,import,in,instanceof,let,new,of,return,static,
+    super,switch,this,throw,try,typeof,var,void,while,with,yield},
+  morekeywords=[2]{Array,Date,JSON,Map,Math,Number,Object,Promise,Set,String,console,document,
+    fetch,log,parseFloat,parseInt,require,setInterval,setTimeout,window},
+  morekeywords=[3]{true,false,null,undefined,NaN,Infinity},
+  sensitive=true,
+  morecomment=[l]{//},morecomment=[s]{/*}{*/},
+  morestring=[b]',morestring=[b]",morestring=[b]`}
+
+% ---------- Listing styles ----------
+\lstdefinestyle{ino}{style=code,language=Arduino,directivestyle=\color{coral!85!white}}
+\lstdefinestyle{py}{style=code,language=Python,
+  morekeywords=[3]{True,False,None,self}}
+\lstdefinestyle{c}{style=code,language=C,directivestyle=\color{coral!85!white},
+  morekeywords=[2]{printf,scanf,puts,malloc,calloc,realloc,free,strlen,strcpy,strcmp,memcpy,
+    fopen,fclose,fprintf,main,size_t,uint8_t,uint16_t,uint32_t,int8_t,int16_t,int32_t,FILE},
+  morekeywords=[3]{NULL,EOF,stdin,stdout,stderr,true,false,EXIT_SUCCESS,EXIT_FAILURE}}
+\lstdefinestyle{cpp}{style=code,language=C++,directivestyle=\color{coral!85!white},
+  morekeywords=[2]{std,cout,cin,cerr,endl,string,vector,map,unordered_map,set,array,pair,
+    unique_ptr,shared_ptr,make_unique,make_shared,printf,size_t,uint8_t,uint16_t,uint32_t},
+  morekeywords=[3]{nullptr,NULL,true,false}}
+\lstdefinestyle{js}{style=code,language=JavaScript}
+
+% ---------- Environments ----------
+\newtcblisting{ino}[1][]{codebox style,listing options={style=ino},#1}
+\newtcblisting{pycode}[1][]{codebox style,listing options={style=py},#1}
+\newtcblisting{ccode}[1][]{codebox style,listing options={style=c},#1}
+\newtcblisting{cppcode}[1][]{codebox style,listing options={style=cpp},#1}
+\newtcblisting{jscode}[1][]{codebox style,listing options={style=js},#1}
+\endinput
