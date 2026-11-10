@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # Carlito and DejaVu Sans Mono are the theme's default fonts.
       - name: Install fonts
@@ -24,7 +24,7 @@ jobs:
       # Minimal TeX Live: the "basic" scheme plus only what the template loads.
       # The list below was taken from the files a real compile reads
       - name: Install TeX Live
-        uses: TeX-Live/setup-texlive-action@v4.1.1
+        uses: TeX-Live/setup-texlive-action@v4
         with:
           scheme: basic
           packages: |
@@ -91,12 +91,19 @@ jobs:
       - name: Compile template (run 2)
         run: xelatex -interaction=nonstopmode -halt-on-error -file-line-error colorbeam-template.tex
 
-      - name: Upload PDF and log
+      - name: Upload log
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
-          name: colorbeam-template
-          path: |
-            colorbeam-template.pdf
-            colorbeam-template.log
+          path: colorbeam-template.log
+          archive: false
           if-no-files-found: ignore
+
+      - name: Upload PDF
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          path: colorbeam-template.pdf
+          archive: false
+          if-no-files-found: ignore
+ 
