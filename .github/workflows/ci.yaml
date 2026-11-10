@@ -6,6 +6,7 @@ on:
     paths-ignore:
       - "images/**"
       - "**.md"
+  pull_request:
 
 jobs:
   compile-template:
@@ -106,4 +107,3 @@ jobs:
           path: colorbeam-template.pdf
           archive: false
           if-no-files-found: ignore
- 
