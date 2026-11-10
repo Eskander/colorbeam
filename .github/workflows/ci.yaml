@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "images/**"
+      - "**.md"
+
+jobs:
+  compile-template:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      # Carlito and DejaVu Sans Mono are the theme's default fonts.
+      - name: Install fonts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            fonts-crosextra-carlito fonts-dejavu-mono
+
+      # Minimal TeX Live: the "basic" scheme plus only what the theme loads.
+      - name: Install TeX Live
+        uses: TeX-Live/setup-texlive-action@v4.1.1
+        with:
+          scheme: basic
+          packages: |
+            beamer
+            xetex
+            fontspec
+            polyglossia
+            pgf
+            pgfplots
+            circuitikz
+            tcolorbox
+            listings
+            etoolbox
+            colortbl
+            tools
+            lm
+            lm-math
+
+      # Two runs: the TikZ overlays need a second pass.
+      # Any compilation error fails the job (-halt-on-error); warnings do not.
+      - name: Compile template (run 1)
+        run: xelatex -interaction=nonstopmode -halt-on-error -file-line-error colorbeam-template.tex
+
+      - name: Compile template (run 2)
+        run: xelatex -interaction=nonstopmode -halt-on-error -file-line-error colorbeam-template.tex
+
+      - name: Upload PDF and log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: colorbeam-template
+          path: |
+            colorbeam-template.pdf
+            colorbeam-template.log
+          if-no-files-found: ignore
