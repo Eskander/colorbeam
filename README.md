@@ -1,6 +1,10 @@
-# colorbeam
+# Colorbeam
 
 A Beamer theme for university lectures and lab sessions. It started as the slide style for my own embedded systems course, where I needed something that handles circuit diagrams, code listings and a lot of step-by-step instructions, but more importantly, didn't look from the _90s_.
+
+[![CI](https://github.com/Eskander/colorbeam/actions/workflows/ci.yaml/badge.svg?branch=main&event=push)](https://github.com/Eskander/colorbeam/actions/workflows/ci.yaml) 
+
+---
 
 The idea is simple: each part of a lecture gets its own color, and everything on the slides (title bar, bullets, boxes, code frames) follows it.
 
@@ -53,7 +57,7 @@ Load it with `\usecolorbeamlibrary{electronics}`. It loads CircuiTikZ in its Eur
 ## Requirements
 
 * XeLaTeX or LuaLaTeX. The theme needs `fontspec`, so plain pdfLaTeX will not work.
-* The default fonts are Carlito (sans) and DejaVu Sans Mono. Both are free and ship with most TeX distributions or operating systems. You can use others, see below.
+* The default fonts are Carlito (sans) and DejaVu Sans Mono. Both are free and ship with most TeX distributions. You can use others.
 * Core packages: `fontspec`, `etoolbox`, `tikz`, `pgfplots`, `tcolorbox`, `listings`, `colortbl`, `array`.
 * The electronics library also needs `circuitikz`.
 
@@ -61,8 +65,7 @@ All of these are part of a full TeX Live or MiKTeX install.
 
 ## Installing
 
-Put `beamerthemecolorbeam.sty` and the library files you want (`colorbeamlib-programming.sty`, `colorbeamlib-electronics.sty`) next to your `.tex` file.
-To make them available everywhere, copy them into your local texmf tree, for example `~/texmf/tex/latex/colorbeam/` on Linux and macOS, then run `texhash` if your distribution needs it.
+Put `beamerthemecolorbeam.sty` and the library files you want (`colorbeamlib-programming.sty`, `colorbeamlib-electronics.sty`) next to your `.tex` file. To make them available everywhere, copy them into your local texmf tree, for example `~/texmf/tex/latex/colorbeam/` on Linux and macOS, then run `texhash` if your distribution needs it.
 
 ## Contributing
 
