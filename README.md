@@ -57,11 +57,11 @@ Load it with `\usecolorbeamlibrary{electronics}`. It loads CircuiTikZ in its Eur
 ## Requirements
 
 * XeLaTeX or LuaLaTeX. The theme needs `fontspec`, so plain pdfLaTeX will not work.
-* The default fonts are Carlito (sans) and DejaVu Sans Mono. Both are free and ship with most TeX distributions. You can use others.
+* The default fonts are Carlito (sans) and JetBrains Mono (monospace). Both are free and open source, and most Linux distributions package them (see below). You can use others.
 * Core packages: `fontspec`, `etoolbox`, `tikz`, `pgfplots`, `tcolorbox`, `listings`, `colortbl`, `array`.
 * The electronics library also needs `circuitikz`.
 
-All of these are part of a full TeX Live or MiKTeX install.
+All of the TeX packages are part of a full TeX Live or MiKTeX install. The fonts are not, so install them separately (on Debian and Ubuntu: `fonts-jetbrains-mono` and `fonts-crosextra-carlito`).
 
 ## Installing
 

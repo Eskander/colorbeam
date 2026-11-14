@@ -3,9 +3,10 @@ name: CI
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - "images/**"
-      - "**.md"
+    paths:
+      - "*.sty"
+      - "*.tex"
+      - ".github/workflows/ci.yaml"
   pull_request:
 
 jobs:
@@ -15,12 +16,11 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      # Carlito and DejaVu Sans Mono are the theme's default fonts.
+      # Carlito and JetBrains Mono are the theme's default fonts.
       - name: Install fonts
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends \
-            fonts-crosextra-carlito fonts-dejavu-mono
+          sudo apt-get install -y --no-install-recommends fonts-crosextra-carlito fonts-jetbrains-mono
 
       # Minimal TeX Live: the "basic" scheme plus only what the template loads.
       # The list below was taken from the files a real compile reads
