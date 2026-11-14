@@ -2,7 +2,8 @@
 
 A Beamer theme for university lectures and lab sessions. It started as the slide style for my own embedded systems course, where I needed something that handles circuit diagrams, code listings and a lot of step-by-step instructions, but more importantly, didn't look from the _90s_.
 
-[![CI](https://github.com/Eskander/colorbeam/actions/workflows/ci.yaml/badge.svg?branch=main&event=push)](https://github.com/Eskander/colorbeam/actions/workflows/ci.yaml) 
+[![CI](https://github.com/Eskander/colorbeam/actions/workflows/ci.yaml/badge.svg?event=push)](https://github.com/Eskander/colorbeam/actions/workflows/ci.yaml)
+[![CD](https://github.com/Eskander/colorbeam/actions/workflows/cd.yaml/badge.svg?event=push)](https://github.com/Eskander/colorbeam/actions/workflows/cd.yaml)
 
 ---
 
