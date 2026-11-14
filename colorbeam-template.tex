@@ -5,6 +5,11 @@
 %  Required files in the same folder: beamerthemecolorbeam.sty and the
 %  colorbeamlib-*.sty libraries loaded below
 %  Home: https://github.com/eskander/colorbeam
+%
+%  This file is both a starting point and a tour of the theme. It is a
+%  short lecture in five parts, and every part uses a different color of
+%  the palette, so you can see how titles, bullets, boxes and code frames
+%  follow the color of the current section. Delete what you do not need.
 % =====================================================================
 % ---------------------------------------------------------------------
 %  Copyright 2026 Eskander Bejaoui
@@ -51,25 +56,27 @@
 \newcommand{\libnote}[1]{\pill{slate}{library: #1}\hspace{0.6em}{\scriptsize\color{ink!70}\texttt{\textbackslash usecolorbeamlibrary\{#1\}}}\par\smallskip}
 
 % Footer text
-\lecturefooter{My course \textbullet\ Session 1}
+\lecturefooter{Embedded sensing \textbullet\ Session 1}
 
 \begin{document}
 
 % ---------------------------------------------------------------------
 % Title: \titleslide[color]{kicker}{title}{subtitle}{subtitle 2}{bottom note}
+% The optional color defaults to the main color of the deck.
 % ---------------------------------------------------------------------
-\titleslide{COURSE \textbullet\ MY SUBJECT}{Session title}{A clear subtitle}{possibly on two lines}{First Last \textbullet\ University \textbullet\ 2026}
+\titleslide{COURSE \textbullet\ EMBEDDED SENSING}{Colorbeam Showcase}{Reading a thermistor with an ESP32}{a tour of the colorbeam theme}{First Last \textbullet\ University \textbullet\ 2026}
 
 % ---------------------------------------------------------------------
-% Outline with numbered steps (each step can have its own color)
+% Outline: numbered steps, each one in the color of its part
 % ---------------------------------------------------------------------
 \begin{frame}{Session outline}
   \begin{columns}[T,onlytextwidth]
     \begin{column}{0.6\textwidth}
       \step{mint}{1}{7.3cm}Boxes and callouts\estep
-      \step{sky}{2}{7.3cm}Tables and code, with a longer line to show the automatic line wrapping\estep
-      \step{leaf}{3}{7.3cm}Diagrams, circuits and plots\estep
-      \step{plum}{4}{7.3cm}Questions and wrap-up\estep
+      \step{sky}{2}{7.3cm}Tables and structure\estep
+      \step{clay}{3}{7.3cm}Code in five languages, with a longer line to show the automatic wrapping\estep
+      \step{leaf}{4}{7.3cm}Circuits, diagrams and plots\estep
+      \step{plum}{5}{7.3cm}Discussion and wrap-up\estep
     \end{column}
     \begin{column}{0.4\textwidth}
       \begin{card}
@@ -110,33 +117,9 @@
 \end{frame}
 
 % ---------------------------------------------------------------------
-% Pills and colored steps
-% ---------------------------------------------------------------------
-\begin{frame}{Pills and numbered steps}
-  \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.5\textwidth}
-      {\bfseries\color{accent}Steps in any color}\par\medskip
-      \step{grape}{1}{5.5cm}Plan\estep
-      \step{sky}{2}{5.5cm}Build\estep
-      \step{leaf}{3}{5.5cm}Test\estep
-      \step{sun}{4}{5.5cm}Fix\estep
-      \step{clay}{5}{5.5cm}Document\estep
-    \end{column}
-    \begin{column}{0.5\textwidth}
-      {\bfseries\color{accent}Pills}\par\medskip
-      \pill{grape}{grape} \pill{sky}{sky} \pill{mint}{mint} \pill{leaf}{leaf}\par\medskip
-      \pill{sun}{sun} \pill{clay}{clay} \pill{coral}{coral} \pill{rose}{rose}\par\medskip
-      \pill{plum}{plum} \pill{slate}{slate}\par\bigskip
-      \begin{card}\small\raggedright
-        An empty color, as in \texttt{\textbackslash step\{\}\{1\}\{5cm\}}, uses the color of the current section.
-      \end{card}
-    \end{column}
-  \end{columns}
-\end{frame}
-
-% ---------------------------------------------------------------------
-% Part slide: changes the color and label of the following slides
+% Part slide: changes the color and label of all the following slides
 % \partslide{number}{color}{title}{subtitle}
+% (\setpart{color}{label} does the same without a divider slide)
 % ---------------------------------------------------------------------
 \partslide{1}{mint}{Boxes and callouts}{highlight what matters}
 
@@ -147,28 +130,28 @@
     \begin{column}{0.5\textwidth}
       \begin{card}
         {\bfseries\color{accent}card}\par\smallskip
-        Neutral box, section color.
+        Neutral box, in the color of the section.
       \end{card}
       \vspace{0.2cm}
       \begin{tip}
         {\bfseries tip}\par\smallskip
-        A practical remark.
+        A divider needs two resistors.
       \end{tip}
       \vspace{0.2cm}
       \begin{infobox}
         {\bfseries infobox}\par\smallskip
-        Extra information or a reminder.
+        12-bit ADC: values from 0 to 4095.
       \end{infobox}
     \end{column}
     \begin{column}{0.5\textwidth}
       \begin{warnbox}
         {\bfseries warnbox}\par\smallskip
-        A warning: do not miss this!
+        Never feed 5 V to a GPIO pin.
       \end{warnbox}
       \vspace{0.2cm}
       \begin{okbox}
         {\bfseries okbox}\par\smallskip
-        A result or a good practice.
+        The reading is stable.
       \end{okbox}
       \vspace{0.2cm}
       \begin{itemize}
@@ -209,9 +192,9 @@
       \end{colorcard}
     \end{column}
     \begin{column}{0.5\textwidth}
-      \begin{colorcard}{leaf}
-        {\bfseries\color{leaf}colorcard\{leaf\}}\par\smallskip\small
-        Same look as okbox, any color you like.
+      \begin{colorcard}{sky}
+        {\bfseries\color{sky}colorcard\{sky\}}\par\smallskip\small
+        Same look as infobox, any color you like.
       \end{colorcard}
     \end{column}
   \end{columns}
@@ -221,31 +204,93 @@
   \end{darkbox}
 \end{frame}
 
+\begin{frame}{Lists, steps and pills}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.46\textwidth}
+      {\bfseries\color{accent}Bullets}\par\medskip
+      \begin{itemize}
+        \item First idea
+        \begin{itemize}
+          \item A detail below it
+          \item Another detail
+        \end{itemize}
+        \item Second idea
+        \item Third idea
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.54\textwidth}
+      {\bfseries\color{accent}Steps in any color}\par\medskip
+      \step{grape}{1}{5.8cm}Plan\estep
+      \step{sky}{2}{5.8cm}Build\estep
+      \step{leaf}{3}{5.8cm}Test\estep
+      \step{sun}{4}{5.8cm}Fix\estep
+      \medskip
+      \pill{mint}{mint} \pill{clay}{clay} \pill{coral}{coral} \pill{rose}{rose} \pill{plum}{plum} \pill{slate}{slate}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 % ---------------------------------------------------------------------
-\partslide{2}{sky}{Tables and code}{core, plus the programming library}
+\partslide{2}{sky}{Tables and structure}{tables, pipelines and tiles}
 
 \begin{frame}{Comparison table}
-  \renewcommand{\arraystretch}{1.3}
+  \renewcommand{\arraystretch}{1.35}
   \centering
-  \begin{tabular}{@{}>{\bfseries}p{4cm}p{4.2cm}p{4.2cm}@{}}
-    \rowcolor{ink}\color{white}\bfseries & \color{white}\bfseries Option A & \color{white}\bfseries Option B\\
-    \rowcolor{white} Criterion 1 & value & value\\
-    \rowcolor{accent!10} Criterion 2 & value & \textcolor{leaf}{\textbf{best value}}\\
-    \rowcolor{white} Criterion 3 & value & value\\
-    \rowcolor{accent!10} Criterion 4 & \textcolor{coral}{\textbf{worst value}} & value\\
+  \begin{tabular}{@{}>{\bfseries}p{2.8cm}p{3.3cm}p{3.3cm}p{3.3cm}@{}}
+    \rowcolor{accent}\color{white}\bfseries & \color{white}\bfseries NTC thermistor & \color{white}\bfseries DHT11 & \color{white}\bfseries DS18B20\\
+    \rowcolor{white} Output & analog voltage & digital, one wire & digital, 1-Wire\\
+    \rowcolor{accent!10} Accuracy & needs calibration & \textcolor{coral}{\textbf{\textpm 2 \textdegree C}} & \textcolor{leaf}{\textbf{\textpm 0.5 \textdegree C}}\\
+    \rowcolor{white} Range & \textminus 40 to 125 \textdegree C & 0 to 50 \textdegree C & \textminus 55 to 125 \textdegree C\\
+    \rowcolor{accent!10} Cost & \textcolor{leaf}{\textbf{a few cents}} & low & medium\\
   \end{tabular}
+  \par\vspace{0.5cm}
+  \begin{infobox}\small
+    Pick the sensor from the requirement first, and from the price second.
+  \end{infobox}
 \end{frame}
+
+\begin{frame}{A pipeline with stagebox}
+  \centering
+  \begin{tikzpicture}
+    \node[stagebox]     (a) at (0,0)    {{\bfseries\color{accent}1. Sense}\\[4pt] NTC and fixed resistor};
+    \node[stagebox=mint] (b) at (3.6,0)  {{\bfseries\color{mint}2. Sample}\\[4pt] 12-bit ADC on the ESP32};
+    \node[stagebox=sun]  (c) at (7.2,0)  {{\bfseries\color{sun}3. Convert}\\[4pt] volts, ohms, then degrees};
+    \node[stagebox=plum] (d) at (10.8,0) {{\bfseries\color{plum}4. Publish}\\[4pt] serial port or MQTT};
+    \draw[ar] (a.east) -- (b.west);
+    \draw[ar] (b.east) -- (c.west);
+    \draw[ar] (c.east) -- (d.west);
+  \end{tikzpicture}
+  \vspace{0.5cm}
+
+  {\small\color{ink!70}\texttt{stagebox} takes an optional color: \texttt{stagebox=plum}. Without it, it uses the section color.}
+\end{frame}
+
+\begin{frame}{Tiles for equipment and items}
+  \centering
+  \begin{tikzpicture}
+    \node[tile]        at (0,0)     {{\bfseries\color{accent}ESP32 DevKit}\\ 3.3 V logic, 12-bit ADC and Wi-Fi};
+    \node[tile=mint]   at (4.75,0)  {{\bfseries\color{mint}NTC 10 k\ohm}\\ Resistance falls as the temperature rises};
+    \node[tile=sun]    at (9.5,0)   {{\bfseries\color{sun}Fixed 10 k\ohm}\\ The other half of the divider};
+    \node[tile=clay]   at (0,-2.4)    {{\bfseries\color{clay}Breadboard}\\ Prototype with no solder};
+    \node[tile=rose]   at (4.75,-2.4) {{\bfseries\color{rose}Jumper wires}\\ Red for power, black for ground};
+    \node[tile=slate]  at (9.5,-2.4)  {{\bfseries\color{slate}USB cable}\\ Power and data link};
+  \end{tikzpicture}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\partslide{3}{clay}{Code in five languages}{core codebox, plus the programming library}
 
 % Frames that contain code must be [fragile]
 \begin{frame}[fragile]{Code block (core)}
   \begin{columns}[T,onlytextwidth]
     \begin{column}{0.62\textwidth}
-      \begin{codebox}[title={example.py},listing options={style=code,language=Python}]
-def average(values):
-    # compute the mean
-    return sum(values) / len(values)
+      \begin{codebox}[title={terminal},listing options={style=code,language=bash}]
+# compile the slides twice
+xelatex colorbeam-template.tex
+xelatex colorbeam-template.tex
 
-print(average([12, 15, 9]))
+# open the result
+xdg-open colorbeam-template.pdf
       \end{codebox}
     \end{column}
     \begin{column}{0.38\textwidth}
@@ -272,7 +317,7 @@ data = [12, 15, 9, 14]
 print(mean(data))
       \end{pycode}
     \end{column}
-    \begin{column}{0.52\textwidth}
+    \begin{column}{0.5\textwidth}
       \begin{jscode}[title={mean.js},listing options={style=js,basicstyle=\codefont{9}{11}}]
 const data = [12, 15, 9, 14];
 
@@ -291,7 +336,7 @@ console.log(mean(data));
 \begin{frame}[fragile]{C and C++}
   \libnote{programming}
   \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.48\textwidth}
+    \begin{column}{0.47\textwidth}
       \begin{ccode}[title={mean.c},listing options={style=c,basicstyle=\codefont{9}{11}}]
 #include <stdio.h>
 
@@ -305,7 +350,7 @@ int main(void) {
 }
       \end{ccode}
     \end{column}
-    \begin{column}{0.52\textwidth}
+    \begin{column}{0.5\textwidth}
       \begin{cppcode}[title={mean.cpp},listing options={style=cpp,basicstyle=\codefont{9}{11}}]
 #include <iostream>
 #include <vector>
@@ -322,25 +367,26 @@ int main() {
   \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Arduino, two blocks side by side}
+\begin{frame}[fragile]{Arduino, a thermistor on the ESP32}
   \libnote{programming}
   \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.42\textwidth}
+    \begin{column}{0.41\textwidth}
       \begin{ino}[title={setup},listing options={style=ino,basicstyle=\codefont{9.5}{11.6}}]
-const int LED = 2;
+const int PIN = 34;
 
 void setup() {
-  pinMode(LED, OUTPUT);
   Serial.begin(115200);
+  analogReadResolution(12);
 }
       \end{ino}
     \end{column}
-    \begin{column}{0.58\textwidth}
+    \begin{column}{0.56\textwidth}
       \begin{ino}[title={loop},listing options={style=ino,basicstyle=\codefont{9.5}{11.6}}]
 void loop() {
-  digitalWrite(LED, HIGH);  // on
-  delay(500);
-  digitalWrite(LED, LOW);   // off
+  int n = analogRead(PIN);
+  float v = n * 3.3 / 4095.0;
+  Serial.print("V = ");
+  Serial.println(v);
   delay(500);
 }
       \end{ino}
@@ -349,7 +395,7 @@ void loop() {
 \end{frame}
 
 % ---------------------------------------------------------------------
-\partslide{3}{leaf}{Diagrams and plots}{TikZ, pgfplots and the electronics library}
+\partslide{4}{leaf}{Circuits, diagrams and plots}{TikZ, pgfplots and the electronics library}
 
 \begin{frame}{Chained formulas with flowbox}
   \centering
@@ -390,6 +436,32 @@ void loop() {
   \end{columns}
 \end{frame}
 
+\begin{frame}{Wiring diagram with board styles}
+  \libnote{electronics}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.6\textwidth}
+      \begin{tikzpicture}
+        \node[rounded corners=5pt,fill=white,draw=ink,line width=1.3pt,minimum width=2.4cm,minimum height=3.6cm,anchor=south west] at (0,0) {};
+        \node[rotate=90,text=ink,font=\small\bfseries] at (1.0,1.8) {DHT11};
+        \foreach \y/\l in {3.0/VCC,1.8/DATA,0.6/GND} {\fill[ink] (2.4,\y) circle (0.1); \node[anchor=east,text=ink,font=\footnotesize\bfseries] at (2.2,\y) {\l};}
+        \draw[wire,coral] (2.4,3.0) -- (5.4,3.0);
+        \draw[wire,sky] (2.4,1.8) -- (5.4,1.8);
+        \draw[wire,black!80] (2.4,0.6) -- (5.4,0.6);
+        \node[board,minimum width=2.7cm,minimum height=3.6cm,anchor=south west] at (5.4,0) {};
+        \foreach \y/\l in {3.0/3V3,1.8/GPIO 4,0.6/GND} {\fill[pinc] (5.4,\y) circle (0.1); \node[pinl] at (5.6,\y) {\l};}
+        \node[rotate=90,text=white,font=\small\bfseries] at (7.75,1.8) {ESP32};
+      \end{tikzpicture}
+    \end{column}
+    \begin{column}{0.4\textwidth}
+      \begin{infobox}\small
+        Styles \texttt{wire}, \texttt{board}, \texttt{pinc} and \texttt{pinl} work in any TikZ drawing.
+      \end{infobox}
+      \vspace{0.2cm}
+      \begin{warnbox}\small Check the sensor voltage rating before powering it.\end{warnbox}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \begin{frame}{RC charging circuit}
   \libnote{electronics}
   \begin{columns}[T,onlytextwidth]
@@ -416,7 +488,7 @@ void loop() {
   \begin{tikzpicture}
     \begin{axis}[width=11cm,height=5.8cm,xlabel={Time (s)},ylabel={Voltage (V)},
         label style={font=\footnotesize,text=ink},tick label style={font=\scriptsize},axis line style={ink},
-        grid=both,grid style={ink!10},every axis plot/.append style={line width=2.2pt},
+        grid=both,grid style={ink!10},/pgf/number format/assume math mode=true,every axis plot/.append style={line width=2.2pt},
         legend style={font=\scriptsize,at={(0.97,0.05)},anchor=south east,draw=ink!30}]
       \addplot[sky,domain=0:5,samples=60]{3.3*(1-exp(-x))};
       \addplot[coral,domain=0:5,samples=60]{3.3*(1-exp(-2*x))};
@@ -426,8 +498,24 @@ void loop() {
   \end{tikzpicture}
 \end{frame}
 
+\begin{frame}{Bar chart in palette colors}
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[ybar,width=11cm,height=5.8cm,bar width=16pt,enlarge x limits=0.14,ymin=0,ymax=30,
+        symbolic x coords={Mon,Tue,Wed,Thu,Fri},xtick=data,ylabel={Temperature (\textdegree C)},
+        label style={font=\footnotesize,text=ink},tick label style={font=\scriptsize},axis line style={ink},
+        ymajorgrids,grid style={ink!10},/pgf/number format/assume math mode=true,
+        legend style={font=\scriptsize,at={(0.5,1.04)},anchor=south,draw=none,fill=none,legend columns=-1}]
+      \addplot[fill=sky,draw=none]   coordinates {(Mon,17)(Tue,19)(Wed,16)(Thu,20)(Fri,18)};
+      \addplot[fill=sun,draw=none]   coordinates {(Mon,23)(Tue,25)(Wed,21)(Thu,27)(Fri,24)};
+      \addplot[fill=coral,draw=none] coordinates {(Mon,20)(Tue,22)(Wed,18)(Thu,24)(Fri,21)};
+      \legend{Morning,Noon,Evening}
+    \end{axis}
+  \end{tikzpicture}
+\end{frame}
+
 % ---------------------------------------------------------------------
-\partslide{4}{plum}{Questions and wrap-up}{engage the class}
+\partslide{5}{plum}{Discussion and wrap-up}{engage the class}
 
 \begin{frame}{Question}
   \questionmark
@@ -444,8 +532,8 @@ void loop() {
   \numrow{}{1}{Numbered row}{A title and a one-line description, framed in the section color}
   \numrow{sun!90!black}{2}{Numbered row in another color}{Pass any palette color as first argument}
   \vspace{0.3cm}
-  \helprow{}{Problem}{Short explanation of the cause and of the fix}
-  \helprow{coral}{Another problem}{Same row, in red for something critical}
+  \helprow{}{Reading stuck at 0}{The sensor is wired to a pin that is not an ADC input}
+  \helprow{coral}{Reading stuck at 4095}{Check that the divider is wired to ground and not to 5 V}
 \end{frame}
 
 % ---------------------------------------------------------------------
