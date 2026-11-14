@@ -65,6 +65,20 @@ All of the TeX packages are part of a full TeX Live or MiKTeX install. The fonts
 
 ## Installing
 
+### From a package (Linux)
+
+Each [release](https://github.com/Eskander/colorbeam/releases) ships a `.deb`, an `.rpm` and a `.pkg.tar.zst`. They install the theme into `/usr/share/texmf/tex/latex/colorbeam/` and pull in the required TeX packages and fonts.
+
+```bash
+sudo apt install ./colorbeam_*_all.deb          # Debian, Ubuntu
+sudo dnf install ./colorbeam-*.noarch.rpm       # Fedora
+sudo pacman -U colorbeam-*.pkg.tar.zst          # Arch Linux
+```
+
+The packaging recipes live in [`packaging/`](packaging/).
+
+### Manually
+
 Put `beamerthemecolorbeam.sty` and the library files you want (`colorbeamlib-programming.sty`, `colorbeamlib-electronics.sty`) next to your `.tex` file. To make them available everywhere, copy them into your local texmf tree, for example `~/texmf/tex/latex/colorbeam/` on Linux and macOS, then run `texhash` if your distribution needs it.
 
 ## Contributing
