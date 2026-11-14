@@ -1,0 +1,28 @@
+# Maintainer: Eskander Bejaoui <mail@eskander.tn>
+pkgname=colorbeam
+pkgver=0
+pkgrel=1
+pkgdesc='Beamer theme for university lectures and lab sessions'
+arch=('any')
+url='https://github.com/Eskander/colorbeam'
+license=('LPPL-1.3c')
+depends=(
+  'texlive-xetex'
+  'texlive-latexrecommended'
+  'texlive-latexextra'
+  'texlive-pictures'
+  'ttf-carlito'
+  'ttf-jetbrains-mono'
+)
+# CI builds from a tarball made with git archive, placed next to this file.
+source=("$pkgname-$pkgver.tar.gz")
+sha256sums=('SKIP')
+
+# For the AUR upload:
+#source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
+
+package() {
+  cd "$pkgname-$pkgver"
+  make -f packaging/Makefile install install-doc install-license \
+    DESTDIR="$pkgdir" TEXMFDIR=/usr/share/texmf
+}
