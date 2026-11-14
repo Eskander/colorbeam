@@ -23,12 +23,9 @@ defaults:
 nav:
   - { title: Home, url: / }
   - { title: Reference, url: /docs/reference.html }
-  - { title: Packaging, url: /docs/packaging.html }
+  - { title: Packaging, url: /packaging/ }
 
-# Keep the site to the markdown and the screenshots.
 exclude:
-  - packaging
+  - .github
   - "*.sty"
   - "*.tex"
-  - LICENSE
-  - .github
