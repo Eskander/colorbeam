@@ -45,7 +45,7 @@ mktexlsr %{_datadir}/texmf >/dev/null 2>&1 || :
 
 %files
 %license LICENSE
-%doc README.md docs/DOCS.md colorbeam-template.tex
+%doc README.md docs/reference.md colorbeam-template.tex
 %{_datadir}/texmf/tex/latex/colorbeam/
 
 %changelog

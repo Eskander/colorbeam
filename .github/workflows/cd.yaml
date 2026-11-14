@@ -1,0 +1,161 @@
+name: CD
+
+# Builds .deb, .rpm and .pkg.tar.zst packages of the theme.
+# Pull requests and manual runs only build;
+# Pushing a tag also publishes the packages on the matching GitHub release.
+
+on:
+  push:
+    tags: ["v*"]
+  pull_request:
+    paths:
+      - "packaging/**"
+      - "*.sty"
+      - ".github/workflows/packages.yaml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  # The version comes from the git tag. Other runs get a placeholder.
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Find version
+        id: version
+        run: |
+          if [ "$GITHUB_REF_TYPE" = tag ]; then
+            version="${GITHUB_REF_NAME#v}"
+            if ! grep -qF " v$version " beamerthemecolorbeam.sty; then
+              echo "::error::Tag $GITHUB_REF_NAME does not match the version in beamerthemecolorbeam.sty"
+              exit 1
+            fi
+          else
+            version="0~git${GITHUB_SHA::7}"
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+  deb:
+    needs: version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Build .deb
+        env:
+          VERSION: ${{ needs.version.outputs.version }}
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends debhelper build-essential
+          cp -r packaging/debian debian
+          sed -e "s/@VERSION@/$VERSION/g" -e "s/@DATE@/$(date -R)/" debian/changelog.in > debian/changelog
+          rm debian/changelog.in
+          dpkg-buildpackage -b -us -uc
+          mv ../colorbeam_*_all.deb .
+
+      - name: Show package contents
+        run: dpkg-deb --info colorbeam_*_all.deb && dpkg-deb --contents colorbeam_*_all.deb
+
+      - uses: actions/upload-artifact@v7
+        with:
+          path: colorbeam_*_all.deb
+          archive: false
+          if-no-files-found: error
+
+  rpm:
+    needs: version
+    runs-on: ubuntu-latest
+    container: fedora:latest
+    steps:
+
+      - name: Install build tools
+        run: dnf install -y --setopt=install_weak_deps=False git rpm-build tar gzip dnf-plugins-core
+
+      - uses: actions/checkout@v7
+
+      - name: Build .rpm
+        env:
+          VERSION: ${{ needs.version.outputs.version }}
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          mkdir -p rpmbuild/SOURCES
+          git archive --format=tar.gz --prefix="colorbeam-$VERSION/" -o "rpmbuild/SOURCES/colorbeam-$VERSION.tar.gz" HEAD
+          sed "s/^Version:.*/Version:        $VERSION/" packaging/rpm/colorbeam.spec > colorbeam.spec
+          dnf builddep -y colorbeam.spec
+          rpmbuild -bb --define "_topdir $PWD/rpmbuild" colorbeam.spec
+
+      - name: Show package contents
+        run: |
+          rpm -qpi rpmbuild/RPMS/noarch/*.rpm
+          rpm -qpR rpmbuild/RPMS/noarch/*.rpm
+          rpm -qpl rpmbuild/RPMS/noarch/*.rpm
+
+      - uses: actions/upload-artifact@v7
+        with:
+          path: rpmbuild/RPMS/noarch/*.rpm
+          archive: false
+          if-no-files-found: error
+
+  arch:
+    needs: version
+    runs-on: ubuntu-latest
+    container: archlinux:base-devel
+    steps:
+      - name: Install build tools
+        run: pacman -Syu --noconfirm --needed git
+
+      - uses: actions/checkout@v7
+
+      - name: Build .pkg.tar.zst
+        env:
+          VERSION: ${{ needs.version.outputs.version }}
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          mkdir arch-build
+          git archive --format=tar.gz --prefix="colorbeam-$VERSION/" -o "arch-build/colorbeam-$VERSION.tar.gz" HEAD
+          sed "s/^pkgver=.*/pkgver=$VERSION/" packaging/arch/PKGBUILD > arch-build/PKGBUILD
+          # makepkg refuses to run as root, so build as an unprivileged user
+          useradd --create-home builder
+          chown -R builder arch-build
+          # -d skips dependency checks
+          su builder -c 'cd arch-build && makepkg -d --noconfirm'
+
+      - name: Show package contents
+        run: |
+          pacman -Qpi arch-build/colorbeam-*.pkg.tar.zst
+          pacman -Qpl arch-build/colorbeam-*.pkg.tar.zst
+
+      - uses: actions/upload-artifact@v7
+        with:
+          path: arch-build/colorbeam-*.pkg.tar.zst
+          archive: false
+          if-no-files-found: error
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [deb, rpm, arch]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: colorbeam*
+          path: dist
+          merge-multiple: true
+
+      - name: Publish on the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          cd dist
+          sha256sum * > SHA256SUMS
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 \
+            || gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --verify-tag --generate-notes
+          gh release upload "$TAG" --repo "$GITHUB_REPOSITORY" --clobber *
