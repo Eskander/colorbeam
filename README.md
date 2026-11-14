@@ -16,19 +16,55 @@ The theme is split in two layers. The core is subject-neutral and is all you nee
 
 ### Core
 
-**Sections with a color of their own.** `\partslide{2}{sky}{Tables and code}{structured content}` draws a full-bleed divider and switches every following slide to that color until the next one. There are ten colors in the palette, picked to stay readable when projected in a bright room (so nothing too neon).
+**Sections with a color of their own.** `\partslide{2}{sky}{Tables and structure}{tables, pipelines and tiles}` draws a full-bleed divider and switches every following slide to that color until the next one. There are ten colors in the palette, picked to stay readable when projected in a bright room (so nothing too neon).
 
-![Part divider](images/part.png)
+| Part divider | One divider per section color |
+| --- | --- |
+| ![Part divider](images/part.png) | ![Section colors](images/sections.png) |
 
-![The palette](images/palette.png)
+| The palette | Re-branding with `\setmaincolor` |
+| --- | --- |
+| ![The palette](images/palette.png) | ![Title slide in four main colors](images/title-colors.png) |
+
+`\setmaincolor{plum}` re-colors the title slide, the introduction and everything after `\resetpart` with one line.
 
 **Callout boxes.** `card`, `tip`, `infobox`, `warnbox`, `okbox`, `darkbox`, and `colorcard` if you want any palette color.
 
-![Callout boxes](images/callouts.png)
+| Callout boxes | Any color, any box |
+| --- | --- |
+| ![Callout boxes](images/callouts.png) | ![Colorcards](images/colorcards.png) |
 
-There are also numbered steps (`\step`), small colored labels (`\pill`), one-line framed rows (`\numrow`, `\helprow`), a big faded question mark for discussion slides (`\questionmark`), a generic dark `codebox` for any language known to `listings`, and a few TikZ styles (`flowbox`, `tile`, `stagebox`, `ar`) for boxes-and-arrows diagrams. TikZ and pgfplots are loaded and set up with the theme colors.
+**Steps, rows and pills.** Numbered steps (`\step`), small colored labels (`\pill`), one-line framed rows (`\numrow`, `\helprow`), and a big faded question mark for discussion slides (`\questionmark`).
 
-![Plot](images/plot.png)
+| Bullets, steps and pills | Numbered and troubleshooting rows |
+| --- | --- |
+| ![Steps and pills](images/steps.png) | ![Rows](images/rows.png) |
+
+| Outline with colored steps | Discussion slide |
+| --- | --- |
+| ![Outline](images/outline.png) | ![Question](images/question.png) |
+
+**Tables and layout.** Tables follow the section color, and a few TikZ styles (`flowbox`, `tile`, `stagebox`, `ar`) cover boxes-and-arrows diagrams.
+
+| Table | Summary slide with a `darkbox` |
+| --- | --- |
+| ![Table](images/table.png) | ![Summary](images/summary.png) |
+
+| `stagebox` pipeline | `tile` grid |
+| --- | --- |
+| ![Pipeline](images/pipeline.png) | ![Tiles](images/tiles.png) |
+
+**Formulas and plots.** TikZ and pgfplots are loaded and set up with the theme colors.
+
+| `flowbox` | Line plot |
+| --- | --- |
+| ![Flowbox](images/flowbox.png) | ![Plot](images/plot.png) |
+
+| Bar chart in palette colors | Generic `codebox` |
+| --- | --- |
+| ![Bar chart](images/bars.png) | ![Codebox](images/codebox.png) |
+
+`codebox` is a generic dark code block for any language known to `listings`.
 
 ### Library: programming
 
@@ -44,15 +80,27 @@ Load it with `\usecolorbeamlibrary{programming}`. It adds highlighting styles tu
 
 Each one takes the same options as `codebox`, for example `\begin{pycode}[title={main.py}]`. Accented letters in comments and strings work, which matters if you teach in French or Spanish. Frames that contain code must be marked `[fragile]`.
 
-![Programming library](images/programming.png)
+| Python and JavaScript | C and C++ |
+| --- | --- |
+| ![Programming library](images/programming.png) | ![C and C++](images/c-cpp.png) |
+
+| Arduino |
+| --- |
+| ![Arduino](images/arduino.png) |
 
 ### Library: electronics
 
-Load it with `\usecolorbeamlibrary{electronics}`. It loads CircuiTikZ in its European style, defines `\ohm`, and adds TikZ styles for wiring diagrams: `wire`, `board` (a dark module such as an ESP32 or an Arduino), `pinc` (a pin) and `pinl` (a pin label).
+Load it with `\usecolorbeamlibrary{electronics}`. It loads CircuiTikZ in its European style, defines `\ohm`, and adds TikZ styles for wiring diagrams: `wire`, `board` (a dark module such as an ESP32 or an Arduino), `pinc` (a pin) and `pinl` (a pin label). The styles also work in plain TikZ pictures.
 
-![Electronics library](images/electronics.png)
+| Schematic | Wiring diagram |
+| --- | --- |
+| ![Electronics library](images/electronics.png) | ![Wiring diagram](images/wiring.png) |
 
-`colorbeam-template.tex` uses everything above, so it doubles as the reference. It loads both libraries, so delete the ones you do not need.
+| RC circuit |
+| --- |
+| ![RC circuit](images/rc.png) |
+
+`colorbeam-template.tex` is a short lecture in five parts, one palette color each, and it uses everything above, so it doubles as the reference. It loads both libraries, so delete the ones you do not need.
 
 ## Requirements
 
