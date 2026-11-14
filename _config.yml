@@ -1,11 +1,10 @@
 title: Colorbeam
-description: A Beamer theme for university lectures and lab sessions
+description: A Colorful theme for LaTeX Beamer presentations
 url: https://eskander.github.io
 baseurl: /colorbeam
 repository: eskander/colorbeam
+layouts_dir: assets/layouts
 
-# All of these ship with GitHub Pages, so no workflow or Gemfile is needed.
-# optional-front-matter + readme-index turn README.md and docs/*.md into pages untouched.
 plugins:
   - jekyll-optional-front-matter
   - jekyll-readme-index
@@ -20,9 +19,6 @@ relative_links:
 defaults:
   - scope: { path: "" }
     values: { layout: default }
-  # reference.md has no H1 of its own
-  - scope: { path: "docs/reference.md" }
-    values: { title: Reference, show_title: true }
 
 nav:
   - { title: Home, url: / }

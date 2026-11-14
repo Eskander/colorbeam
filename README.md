@@ -8,7 +8,7 @@ A Beamer theme for university lectures and lab sessions. It started as the slide
 
 The idea is simple: each part of a lecture gets its own color, and everything on the slides (title bar, bullets, boxes, code frames) follows it.
 
-![Title slide](images/title.png)
+![Title slide](assets/images/title.png)
 
 The theme is split in two layers. The core is subject-neutral and is all you need for most lectures. On top of it there are optional libraries for specific fields, currently `programming` and `electronics`. You load only the ones you use, so a history or chemistry lecture does not need CircuiTikZ installed.
 
@@ -20,11 +20,11 @@ The theme is split in two layers. The core is subject-neutral and is all you nee
 
 | Part divider | One divider per section color |
 | --- | --- |
-| ![Part divider](images/part.png) | ![Section colors](images/sections.png) |
+| ![Part divider](assets/images/part.png) | ![Section colors](assets/images/sections.png) |
 
 | The palette | Re-branding with `\setmaincolor` |
 | --- | --- |
-| ![The palette](images/palette.png) | ![Title slide in four main colors](images/title-colors.png) |
+| ![The palette](assets/images/palette.png) | ![Title slide in four main colors](assets/images/title-colors.png) |
 
 `\setmaincolor{plum}` re-colors the title slide, the introduction and everything after `\resetpart` with one line.
 
@@ -32,37 +32,37 @@ The theme is split in two layers. The core is subject-neutral and is all you nee
 
 | Callout boxes | Any color, any box |
 | --- | --- |
-| ![Callout boxes](images/callouts.png) | ![Colorcards](images/colorcards.png) |
+| ![Callout boxes](assets/images/callouts.png) | ![Colorcards](assets/images/colorcards.png) |
 
 **Steps, rows and pills.** Numbered steps (`\step`), small colored labels (`\pill`), one-line framed rows (`\numrow`, `\helprow`), and a big faded question mark for discussion slides (`\questionmark`).
 
 | Bullets, steps and pills | Numbered and troubleshooting rows |
 | --- | --- |
-| ![Steps and pills](images/steps.png) | ![Rows](images/rows.png) |
+| ![Steps and pills](assets/images/steps.png) | ![Rows](assets/images/rows.png) |
 
 | Outline with colored steps | Discussion slide |
 | --- | --- |
-| ![Outline](images/outline.png) | ![Question](images/question.png) |
+| ![Outline](assets/images/outline.png) | ![Question](assets/images/question.png) |
 
 **Tables and layout.** Tables follow the section color, and a few TikZ styles (`flowbox`, `tile`, `stagebox`, `ar`) cover boxes-and-arrows diagrams.
 
 | Table | Summary slide with a `darkbox` |
 | --- | --- |
-| ![Table](images/table.png) | ![Summary](images/summary.png) |
+| ![Table](assets/images/table.png) | ![Summary](assets/images/summary.png) |
 
 | `stagebox` pipeline | `tile` grid |
 | --- | --- |
-| ![Pipeline](images/pipeline.png) | ![Tiles](images/tiles.png) |
+| ![Pipeline](assets/images/pipeline.png) | ![Tiles](assets/images/tiles.png) |
 
 **Formulas and plots.** TikZ and pgfplots are loaded and set up with the theme colors.
 
 | `flowbox` | Line plot |
 | --- | --- |
-| ![Flowbox](images/flowbox.png) | ![Plot](images/plot.png) |
+| ![Flowbox](assets/images/flowbox.png) | ![Plot](assets/images/plot.png) |
 
 | Bar chart in palette colors | Generic `codebox` |
 | --- | --- |
-| ![Bar chart](images/bars.png) | ![Codebox](images/codebox.png) |
+| ![Bar chart](assets/images/bars.png) | ![Codebox](assets/images/codebox.png) |
 
 `codebox` is a generic dark code block for any language known to `listings`.
 
@@ -82,11 +82,11 @@ Each one takes the same options as `codebox`, for example `\begin{pycode}[title=
 
 | Python and JavaScript | C and C++ |
 | --- | --- |
-| ![Programming library](images/programming.png) | ![C and C++](images/c-cpp.png) |
+| ![Programming library](assets/images/programming.png) | ![C and C++](assets/images/c-cpp.png) |
 
 | Arduino |
 | --- |
-| ![Arduino](images/arduino.png) |
+| ![Arduino](assets/images/arduino.png) |
 
 ### Library: electronics
 
@@ -94,11 +94,11 @@ Load it with `\usecolorbeamlibrary{electronics}`. It loads CircuiTikZ in its Eur
 
 | Schematic | Wiring diagram |
 | --- | --- |
-| ![Electronics library](images/electronics.png) | ![Wiring diagram](images/wiring.png) |
+| ![Electronics library](assets/images/electronics.png) | ![Wiring diagram](assets/images/wiring.png) |
 
 | RC circuit |
 | --- |
-| ![RC circuit](images/rc.png) |
+| ![RC circuit](assets/images/rc.png) |
 
 `colorbeam-template.tex` is a short lecture in five parts, one palette color each, and it uses everything above, so it doubles as the reference. It loads both libraries, so delete the ones you do not need.
 

@@ -1,3 +1,5 @@
+# Reference
+
 ## Getting started
 
 Copy `colorbeam-template.tex` and edit it, or start from this minimal example:
