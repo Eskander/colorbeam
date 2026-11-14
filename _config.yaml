@@ -26,6 +26,9 @@ nav:
   - { title: Reference, url: /docs/reference.html }
   - { title: Packaging, url: /packaging/ }
 
+include:
+  - CONTRIBUTING.md
+
 exclude:
   - .github
   - packaging/Makefile

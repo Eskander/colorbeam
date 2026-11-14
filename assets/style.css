@@ -234,6 +234,10 @@ footer.site {
   font-size: .9rem;
   color: var(--muted);
   border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .4rem 1.5rem;
 }
 
 footer.site a {
