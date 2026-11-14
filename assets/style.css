@@ -222,19 +222,6 @@ td {
   vertical-align: top;
 }
 
-td img {
-  width: 100%;
-}
-
-/* Screenshot tables: equal columns, and a lone screenshot gets the same width as one of two */
-table:has(td img) {
-  table-layout: fixed;
-}
-
-table:has(td img):not(:has(th + th)) {
-  width: 50%;
-}
-
 td code {
   white-space: normal;
   overflow-wrap: anywhere;
@@ -265,9 +252,5 @@ footer.site a {
   table {
     display: block;
     overflow-x: auto;
-  }
-
-  table:has(td img) {
-    display: table;
   }
 }

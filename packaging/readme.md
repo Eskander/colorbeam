@@ -1,6 +1,6 @@
 # Packaging
 
-Recipes for the Linux packages published with each release.
+Recipes for the Linux packages [published with each release](https://github.com/Eskander/colorbeam/releases/latest).
 
 | Format | Recipe | Target |
 | --- | --- | --- |

@@ -22,10 +22,15 @@ defaults:
 
 nav:
   - { title: Home, url: / }
+  - { title: Install, url: /docs/install.html }
   - { title: Reference, url: /docs/reference.html }
   - { title: Packaging, url: /packaging/ }
 
 exclude:
   - .github
+  - packaging/Makefile
+  - packaging/arch
+  - packaging/debian
+  - packaging/rpm
   - "*.sty"
   - "*.tex"
