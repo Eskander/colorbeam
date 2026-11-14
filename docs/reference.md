@@ -1,32 +1,4 @@
-## Getting started
-
-Copy `colorbeam-template.tex` and edit it, or start from this minimal example:
-
-```latex
-\documentclass[aspectratio=169,12pt,t]{beamer}
-\usetheme{colorbeam}
-\usecolorbeamlibrary{programming}   % optional, comma-separated list
-
-\lecturefooter{Introduction to programming, Session 3}
-
-\begin{document}
-
-\titleslide{COURSE NAME}{Lecture title}{A subtitle}{}{Your Name, University, 2026}
-
-\partslide{1}{mint}{First part}{what we cover}
-
-\begin{frame}[fragile]{A slide}
-  \begin{pycode}[title={hello.py}]
-print("Bullets, titles and boxes all use the mint of this part.")
-  \end{pycode}
-\end{frame}
-
-\end{document}
-```
-
-Compile with `xelatex` or `lualatex`, and run it twice. The title bar, footer and divider slides are TikZ overlays positioned relative to the page, and TikZ only learns where the page is after the first run.
-
-`\usecolorbeamlibrary` has to come after `\usetheme{colorbeam}`. The libraries stop with a clear error message if the theme is not loaded.
+# Reference
 
 ## Customizing
 
@@ -42,7 +14,7 @@ Compile with `xelatex` or `lualatex`, and run it twice. The title bar, footer an
 
 **Language.** The word in "Part 1" is `\partlabel`. For a French deck, load `polyglossia` with `\setmainlanguage{french}` and add `\renewcommand{\partlabel}{Partie}`.
 
-**Your own library.** A library is just a package called `colorbeamlib-<name>.sty` that is loaded after the theme. Start from `colorbeamlib-programming.sty`: define your `listings` language and style, then wrap them in a `\newtcblisting` that uses `codebox style`. If you write one for another field and want to share it, open a pull request.
+**Your own library.** See [Contributing](../CONTRIBUTING.md) for how to write one.
 
 ## Command reference
 

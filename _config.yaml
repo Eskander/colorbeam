@@ -1,0 +1,39 @@
+title: Colorbeam
+description: A Colorful theme for LaTeX Beamer presentations
+url: https://eskander.github.io
+baseurl: /colorbeam
+repository: eskander/colorbeam
+layouts_dir: assets/layouts
+
+plugins:
+  - jekyll-optional-front-matter
+  - jekyll-readme-index
+  - jekyll-relative-links
+  - jekyll-titles-from-headings
+  - jekyll-seo-tag
+
+relative_links:
+  enabled: true
+  collections: false
+
+defaults:
+  - scope: { path: "" }
+    values: { layout: default }
+
+nav:
+  - { title: Home, url: / }
+  - { title: Install, url: /docs/install.html }
+  - { title: Reference, url: /docs/reference.html }
+  - { title: Packaging, url: /packaging/ }
+
+include:
+  - CONTRIBUTING.md
+
+exclude:
+  - .github
+  - packaging/Makefile
+  - packaging/arch
+  - packaging/debian
+  - packaging/rpm
+  - "*.sty"
+  - "*.tex"
