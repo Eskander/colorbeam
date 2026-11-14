@@ -1,0 +1,21 @@
+Source: colorbeam
+Section: tex
+Priority: optional
+Maintainer: Eskander Bejaoui <mail@eskander.tn>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.6.2
+Homepage: https://github.com/Eskander/colorbeam
+Rules-Requires-Root: no
+
+Package: colorbeam
+Architecture: all
+Depends: ${misc:Depends},
+ texlive-xetex,
+ texlive-latex-extra,
+ texlive-pictures,
+ fonts-crosextra-carlito,
+ fonts-jetbrains-mono
+Description: Beamer theme for university lectures and lab sessions
+ Colorbeam is a Beamer theme with a multi-color section system, callout
+ boxes, code blocks, numbered steps and TikZ helpers. Optional libraries
+ add support for programming and electronics lectures.
